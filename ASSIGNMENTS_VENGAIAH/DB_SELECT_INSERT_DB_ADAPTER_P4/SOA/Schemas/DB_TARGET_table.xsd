@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/DB_TARGET" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/DB_TARGET" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="PremiumCustomersCollection" type="PremiumCustomersCollection"/>
+   <xs:complexType name="PremiumCustomersCollection">
+      <xs:sequence>
+         <xs:element name="PremiumCustomers" type="PremiumCustomers" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="PremiumCustomers">
+      <xs:sequence>
+         <xs:element name="cusId" type="xs:decimal" nillable="true"/>
+         <xs:element name="cusName" type="string20" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string20">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="20"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

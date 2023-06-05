@@ -1,0 +1,32 @@
+<wsdl:definitions
+     name="DB_ADAPTER"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ASSIGNMENTS_VENGAIAH/JMS_ADAPTER_P5/DB_ADAPTER"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ASSIGNMENTS_VENGAIAH/JMS_ADAPTER_P5/DB_ADAPTER"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/DB_ADAPTER"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="DB_ADAPTER_plt" >
+    <plt:role name="DB_ADAPTER_role" >
+      <plt:portType name="tns:DB_ADAPTER_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/DB_ADAPTER" schemaLocation="../Schemas/DB_ADAPTER_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="DB_ADAPTERSelect_inputParameters">
+        <wsdl:part name="DB_ADAPTERSelect_inputParameters" element="top:DB_ADAPTERSelect_cusIdInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="CustomersCollection_msg">
+        <wsdl:part name="CustomersCollection" element="top:CustomersCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="DB_ADAPTER_ptt">
+        <wsdl:operation name="DB_ADAPTERSelect">
+            <wsdl:input message="tns:DB_ADAPTERSelect_inputParameters"/>
+            <wsdl:output message="tns:CustomersCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

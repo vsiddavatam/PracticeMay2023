@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Wed Apr 12 15:32:57 IST 2023
+  Author:  sriha
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcess1"
+               targetNamespace="http://xmlns.oracle.com/ASSIGNMENTS_VENGAIAH/FTP_ADAPTER_P2/BPELProcess1"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/ASSIGNMENTS_VENGAIAH/FTP_ADAPTER_P2/BPELProcess1"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/file/ASSIGNMENTS_VENGAIAH/FTP_ADAPTER_P2/READ_FILE"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/ftp/ASSIGNMENTS_VENGAIAH/FTP_ADAPTER_P2/FTP_ADAPTER"
+         xmlns:ns4="http://TargetNamespace.com/FTP_ADAPTER" xmlns:ns3="http://TargetNamespace.com/READ_FILE">
+
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <partnerLinks>
+    <partnerLink name="READ_FILE" partnerLinkType="ns1:Read_plt" myRole="Read_role"/>
+    <partnerLink name="FTP_ADAPTER" partnerLinkType="ns2:Put_plt" partnerRole="Put_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Receive1_Read_InputVariable" messageType="ns1:Read_msg"/>
+    <variable name="Invoke1_Put_InputVariable" messageType="ns2:Put_msg"/>
+  </variables>
+  <sequence name="main">
+    <receive name="Receive1" partnerLink="READ_FILE" portType="ns1:Read_ptt" operation="Read"
+             variable="Receive1_Read_InputVariable" createInstance="yes"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$Receive1_Read_InputVariable.body/ns3:name/ns3:first_name</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_Put_InputVariable.body/ns4:name/ns4:first_name</to>
+      </copy>
+      <copy>
+        <from>$Receive1_Read_InputVariable.body/ns3:name/ns3:last_name</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_Put_InputVariable.body/ns4:name/ns4:last_name</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="FTP_ADAPTER" portType="ns2:Put_ptt" operation="Put"
+            inputVariable="Invoke1_Put_InputVariable"/>
+  </sequence>
+</process>
